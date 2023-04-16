@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TodoList from "../components/todo/TodoList";
 import { createTodo, getTodos } from "../api/api";
+import TodoListContainer from "../components/todo/TodoList.container";
 
 const Todo = () => {
   const [todos, setTodos] = useState([]);
@@ -45,7 +45,7 @@ const Todo = () => {
       <TodoListWrapper>
         {todos &&
           todos.map(todoData => (
-            <TodoList
+            <TodoListContainer
               key={todoData.id}
               todoData={todoData}
               setTodos={setTodos}
