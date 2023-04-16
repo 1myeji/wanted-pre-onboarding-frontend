@@ -17,6 +17,7 @@ export const InputWrapper = styled.div`
     padding: 0px 11px 1px 15px;
     border-radius: 4px;
     border: 1px solid rgb(221, 221, 221);
+    gap: 10px;
   }
 `;
 
@@ -39,4 +40,5 @@ export const AuthButton = styled.button`
 
 export const ErrorMessage = styled.p`
   color: rgb(95, 0, 128);
+  margin: 10px 0;
 `;
