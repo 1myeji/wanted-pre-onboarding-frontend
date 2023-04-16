@@ -42,3 +42,23 @@ export const createTodo = async createTodoRequest => {
     throw error;
   }
 };
+
+export const deleteTodo = async id => {
+  try {
+    const res = await authInstance.delete(`/todos/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const updateTodo = async (id, updateTodoRequest) => {
+  try {
+    const res = await authInstance.put(`/todos/${id}`, updateTodoRequest);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

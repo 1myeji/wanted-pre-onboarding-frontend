@@ -45,7 +45,11 @@ const Todo = () => {
       <TodoListWrapper>
         {todos &&
           todos.map(todoData => (
-            <TodoList key={todoData.id} todoData={todoData} />
+            <TodoList
+              key={todoData.id}
+              todoData={todoData}
+              setTodos={setTodos}
+            />
           ))}
       </TodoListWrapper>
     </>

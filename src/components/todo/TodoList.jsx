@@ -1,11 +1,44 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { deleteTodo, getTodos, updateTodo } from "../../api/api";
 
-const TodoList = ({ todoData }) => {
+const TodoList = ({ todoData, setTodos }) => {
   const [modify, setModify] = useState(false);
+  const [modifyTodo, setModifyTodo] = useState("");
 
   const onClickModify = () => {
     setModify(!modify);
+  };
+
+  const onClickDeleteTodo = async () => {
+    await deleteTodo(todoData?.id);
+    const updateTodos = await getTodos();
+    setTodos(updateTodos);
+  };
+
+  const onSubmitModify = async () => {
+    const updateTodoRequest = {
+      todo: modifyTodo,
+      isCompleted: todoData?.isCompleted,
+    };
+    await updateTodo(todoData?.id, updateTodoRequest);
+    const updateTodos = await getTodos();
+    setTodos(updateTodos);
+    setModify(!modify);
+  };
+
+  const onChangeModifyInput = event => {
+    setModifyTodo(event.target.value);
+  };
+
+  const onClickCompleted = async () => {
+    const updateTodoRequest = {
+      todo: todoData?.todo,
+      isCompleted: !todoData?.isCompleted,
+    };
+    await updateTodo(todoData?.id, updateTodoRequest);
+    const updateTodos = await getTodos();
+    setTodos(updateTodos);
   };
 
   return (
@@ -14,12 +47,23 @@ const TodoList = ({ todoData }) => {
         <>
           <div>
             <label>
-              <input type="checkbox" />
-              <input data-testid="modify-input" className="modify_input" />
+              <input
+                type="checkbox"
+                onClick={onClickCompleted}
+                defaultChecked={todoData?.isCompleted}
+              />
+              <input
+                data-testid="modify-input"
+                className="modify_input"
+                onChange={onChangeModifyInput}
+                defaultValue={todoData?.todo}
+              />
             </label>
           </div>
           <div>
-            <button data-testid="submit-button">제출</button>
+            <button data-testid="submit-button" onClick={onSubmitModify}>
+              제출
+            </button>
             <button data-testid="cancel-button" onClick={onClickModify}>
               취소
             </button>
@@ -29,7 +73,11 @@ const TodoList = ({ todoData }) => {
         <>
           <div>
             <label>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onClick={onClickCompleted}
+                defaultChecked={todoData?.isCompleted}
+              />
               <span>{todoData?.todo}</span>
             </label>
           </div>
@@ -37,7 +85,9 @@ const TodoList = ({ todoData }) => {
             <button data-testid="modify-button" onClick={onClickModify}>
               수정
             </button>
-            <button data-testid="delete-button">삭제</button>
+            <button data-testid="delete-button" onClick={onClickDeleteTodo}>
+              삭제
+            </button>
           </div>
         </>
       )}
