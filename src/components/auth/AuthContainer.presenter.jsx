@@ -11,9 +11,10 @@ const AuthContainerPresenter = ({
   buttonId,
   onChangeAuthInputValue,
   authInputValue,
+  onSubmit,
 }) => {
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <AuthTitle>{authTitle}</AuthTitle>
       <InputWrapper>
         <input
@@ -42,7 +43,7 @@ const AuthContainerPresenter = ({
       >
         {authTitle}
       </AuthButton>
-    </>
+    </form>
   );
 };
 

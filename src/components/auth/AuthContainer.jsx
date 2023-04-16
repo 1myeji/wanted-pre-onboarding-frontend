@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AuthContainerPresenter from "./AuthContainer.presenter";
 
-const AuthContainer = ({ authTitle, buttonId }) => {
+const AuthContainer = ({ authTitle, buttonId, onSubmit }) => {
   const [authInputValue, setAuthInputValue] = useState({
     email: { content: "", errorMsg: "" },
     password: { content: "", errorMsg: "" },
@@ -28,12 +28,21 @@ const AuthContainer = ({ authTitle, buttonId }) => {
     }));
   };
 
+  const handleSubmit = event => {
+    onSubmit(
+      event,
+      authInputValue.email.content,
+      authInputValue.password.content
+    );
+  };
+
   return (
     <AuthContainerPresenter
       authTitle={authTitle}
       buttonId={buttonId}
       onChangeAuthInputValue={onChangeAuthInputValue}
       authInputValue={authInputValue}
+      onSubmit={handleSubmit}
     />
   );
 };
