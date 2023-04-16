@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const TodoList = () => {
+const TodoList = ({ todoData }) => {
   const [modify, setModify] = useState(false);
 
   const onClickModify = () => {
@@ -30,7 +30,7 @@ const TodoList = () => {
           <div>
             <label>
               <input type="checkbox" />
-              <span>TODO 1</span>
+              <span>{todoData?.todo}</span>
             </label>
           </div>
           <div>

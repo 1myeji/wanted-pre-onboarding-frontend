@@ -1,17 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TodoList from "../components/todo/TodoList";
+import { createTodo, getTodos } from "../api/api";
 
 const Todo = () => {
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const result = await getTodos();
+      console.log(result);
+      setTodos(result);
+    };
+    fetchTodos();
+  }, []);
+
+  const onChangeTodoInput = event => {
+    setNewTodo(event.target.value);
+  };
+
+  const onSubmitCreateTodo = async event => {
+    event.preventDefault();
+    const createTodoRequest = {
+      todo: newTodo,
+    };
+    await createTodo(createTodoRequest);
+    setNewTodo("");
+    const updateTodos = await getTodos();
+    setTodos(updateTodos);
+  };
+
   return (
     <>
       <TodoTitle>Todo</TodoTitle>
-      <TodoInput data-testid="new-todo-input" />
-      <AddButton data-testid="new-todo-add-button">추가</AddButton>
+      <form onSubmit={onSubmitCreateTodo}>
+        <TodoInput
+          data-testid="new-todo-input"
+          onChange={onChangeTodoInput}
+          value={newTodo}
+        />
+        <AddButton data-testid="new-todo-add-button">추가</AddButton>
+      </form>
       <TodoListWrapper>
-        {[1, 2, 3].map(() => (
-          <TodoList />
-        ))}
+        {todos &&
+          todos.map(todoData => (
+            <TodoList key={todoData.id} todoData={todoData} />
+          ))}
       </TodoListWrapper>
     </>
   );
