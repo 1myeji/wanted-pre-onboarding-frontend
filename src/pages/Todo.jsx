@@ -10,7 +10,6 @@ const Todo = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       const result = await getTodos();
-      console.log(result);
       setTodos(result);
     };
     fetchTodos();

@@ -12,6 +12,7 @@ const Redirect = () => {
     )
       navigate("/todo");
     if (!accessToken && location.pathname === "/todo") navigate("/signin");
+    if (location.pathname === "/") navigate("/signup");
   }, [location, navigate, accessToken]);
 
   return null;
